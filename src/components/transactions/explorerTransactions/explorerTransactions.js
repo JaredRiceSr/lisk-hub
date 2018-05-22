@@ -5,6 +5,8 @@ import TransactionOverview from './../transactionOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
 
+import routes from './../../../constants/routes';
+
 class ExplorerTransactions extends React.Component {
   render() {
     const onInit = () => {
@@ -44,11 +46,19 @@ class ExplorerTransactions extends React.Component {
       });
     };
 
+    const onTransactionRowClick = (props) => {
+      const explorerBasePath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
+      const accountPath = `${explorerBasePath}/${this.props.address}`;
+      const transactionDetailPath = `${accountPath}?id=${props.value.id}`;
+      this.props.history.push(transactionDetailPath);
+    };
+
     const overviewProps = {
       ...this.props,
       onInit,
       onLoadMore,
       onFilterSet,
+      onTransactionRowClick,
     };
 
     return (
